@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Banking Guide - Interactive Tutorial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="tutorial.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-university"></i> Banking Guide</h1>
+            <p class="subtitle">A step-by-step interactive tutorial for managing your finances</p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="step-indicator" id="stepIndicator">
+            <!-- Filled by JavaScript -->
+        </div>
+
+        <div class="step active">
+            <h2><i class="fas fa-search"></i> Step 1: Choose a Bank</h2>
+            <ul>
+                <li>Compare fees, interest rates, and services between different banks</li>
+                <li>Consider online-only banks for higher interest rates and lower fees</li>
+                <li>Look for FDIC or NCUA insurance to protect your money</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Pro Tip:</strong> Credit unions often offer better rates and lower fees than traditional banks.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-user-plus"></i> Step 2: Open a Bank Account</h2>
+            <ul>
+                <li>Gather required documents: government-issued ID, Social Security number, and proof of address</li>
+                <li>Visit a branch or apply online (for many banks)</li>
+                <li>Choose between checking, savings, or other account types based on your needs</li>
+                <li>Make an initial deposit (amount varies by bank)</li>
+            </ul>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle warning-icon"></i>
+                <div>
+                    <strong>Important:</strong> Always read the account agreement carefully to understand fees and requirements.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-money-bill-wave"></i> Step 3: Deposit Money</h2>
+            <ul>
+                <li><strong>In person:</strong> Visit a teller with cash or checks</li>
+                <li><strong>ATM deposits:</strong> Use your bank's ATM network for convenience</li>
+                <li><strong>Mobile deposit:</strong> Many banks allow check deposits via smartphone app</li>
+                <li><strong>Direct deposit:</strong> Set up with your employer for automatic paycheck deposits</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Pro Tip:</strong> Always keep your deposit receipts until the transaction appears in your account.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-wallet"></i> Step 4: Withdraw Money</h2>
+            <ul>
+                <li><strong>ATM withdrawals:</strong> Use your debit card at any ATM (watch for fees)</li>
+                <li><strong>Teller withdrawals:</strong> Visit a branch for larger amounts</li>
+                <li><strong>Online transfers:</strong> Move money between accounts or to other people</li>
+                <li><strong>Debit card purchases:</strong> Use your card directly at merchants</li>
+            </ul>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle warning-icon"></i>
+                <div>
+                    <strong>Security Tip:</strong> Always shield your PIN when using ATMs and regularly check your account for unauthorized transactions.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-mobile-alt"></i> Step 5: Use Digital Banking</h2>
+            <ul>
+                <li>Download your bank's mobile app for on-the-go access</li>
+                <li>Set up online banking to manage accounts from your computer</li>
+                <li>Use features like bill pay, transfers, and mobile check deposit</li>
+                <li>Enable alerts for low balances, large transactions, and suspicious activity</li>
+                <li>Explore budgeting tools many banks now offer</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Security Tip:</strong> Always use strong, unique passwords and enable two-factor authentication for online banking.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-chart-line"></i> Step 6: Monitor Your Account</h2>
+            <ul>
+                <li>Review transactions regularly (weekly is ideal)</li>
+                <li>Balance your checkbook or use budgeting apps</li>
+                <li>Watch for and understand any fees charged</li>
+                <li>Report any suspicious activity immediately</li>
+                <li>Review monthly statements for accuracy</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Pro Tip:</strong> Set up automatic savings transfers to build your savings effortlessly.
+                </div>
+            </div>
+        </div>
+
+        <div class="completion-message" id="completionMessage">
+            <i class="fas fa-check-circle bounce"></i>
+            <h2>Congratulations!</h2>
+            <p>You've completed the banking tutorial. You're now ready to manage your finances with confidence.</p>
+            <button class="btn-secondary" id="restartBtn">
+                <i class="fas fa-redo"></i> Start Over
+            </button>
+        </div>
+
+        <div class="navigation">
+            <button class="btn-primary" id="prevBtn" disabled>
+                <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn-secondary" id="nextBtn">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="tutorial.js"></script>
+</body>
+</html>

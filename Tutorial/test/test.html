@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Guide - Interactive Tutorial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --warning: #e74c3c;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        h1 {
+            color: var(--dark);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        h1 i {
+            color: var(--primary);
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 30px 0;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .step {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: var(--dark);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        li::before {
+            content: '•';
+            color: var(--secondary);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .tip-box {
+            background-color: #eafaf1;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tip-icon {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        .warning-box {
+            background-color: #fdedec;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .warning-icon {
+            color: var(--warning);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #bdc3c7;
+            transition: var(--transition);
+        }
+
+        .indicator-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .completion-message i {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .bounce {
+            animation: bounce 1s;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .step {
+                padding: 20px;
+            }
+            
+            button {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-university"></i> Banking Guide</h1>
+            <p class="subtitle">A step-by-step interactive tutorial for managing your finances</p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="step-indicator" id="stepIndicator">
+            <!-- Filled by JavaScript -->
+        </div>
+
+        <div class="step active">
+            <h2><i class="fas fa-search"></i> Step 1: Choose a Bank</h2>
+            <ul>
+                <li>Compare fees, interest rates, and services between different banks</li>
+                <li>Consider online-only banks for higher interest rates and lower fees</li>
+                <li>Look for FDIC or NCUA insurance to protect your money</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Pro Tip:</strong> Credit unions often offer better rates and lower fees than traditional banks.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-user-plus"></i> Step 2: Open a Bank Account</h2>
+            <ul>
+                <li>Gather required documents: government-issued ID, Social Security number, and proof of address</li>
+                <li>Visit a branch or apply online (for many banks)</li>
+                <li>Choose between checking, savings, or other account types based on your needs</li>
+                <li>Make an initial deposit (amount varies by bank)</li>
+            </ul>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle warning-icon"></i>
+                <div>
+                    <strong>Important:</strong> Always read the account agreement carefully to understand fees and requirements.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-money-bill-wave"></i> Step 3: Deposit Money</h2>
+            <ul>
+                <li><strong>In person:</strong> Visit a teller with cash or checks</li>
+                <li><strong>ATM deposits:</strong> Use your bank's ATM network for convenience</li>
+                <li><strong>Mobile deposit:</strong> Many banks allow check deposits via smartphone app</li>
+                <li><strong>Direct deposit:</strong> Set up with your employer for automatic paycheck deposits</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Pro Tip:</strong> Always keep your deposit receipts until the transaction appears in your account.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-wallet"></i> Step 4: Withdraw Money</h2>
+            <ul>
+                <li><strong>ATM withdrawals:</strong> Use your debit card at any ATM (watch for fees)</li>
+                <li><strong>Teller withdrawals:</strong> Visit a branch for larger amounts</li>
+                <li><strong>Online transfers:</strong> Move money between accounts or to other people</li>
+                <li><strong>Debit card purchases:</strong> Use your card directly at merchants</li>
+            </ul>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle warning-icon"></i>
+                <div>
+                    <strong>Security Tip:</strong> Always shield your PIN when using ATMs and regularly check your account for unauthorized transactions.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-mobile-alt"></i> Step 5: Use Digital Banking</h2>
+            <ul>
+                <li>Download your bank's mobile app for on-the-go access</li>
+                <li>Set up online banking to manage accounts from your computer</li>
+                <li>Use features like bill pay, transfers, and mobile check deposit</li>
+                <li>Enable alerts for low balances, large transactions, and suspicious activity</li>
+                <li>Explore budgeting tools many banks now offer</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Security Tip:</strong> Always use strong, unique passwords and enable two-factor authentication for online banking.
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><i class="fas fa-chart-line"></i> Step 6: Monitor Your Account</h2>
+            <ul>
+                <li>Review transactions regularly (weekly is ideal)</li>
+                <li>Balance your checkbook or use budgeting apps</li>
+                <li>Watch for and understand any fees charged</li>
+                <li>Report any suspicious activity immediately</li>
+                <li>Review monthly statements for accuracy</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div>
+                    <strong>Pro Tip:</strong> Set up automatic savings transfers to build your savings effortlessly.
+                </div>
+            </div>
+        </div>
+
+        <div class="completion-message" id="completionMessage">
+            <i class="fas fa-check-circle bounce"></i>
+            <h2>Congratulations!</h2>
+            <p>You've completed the banking tutorial. You're now ready to manage your finances with confidence.</p>
+            <button class="btn-secondary" id="restartBtn">
+                <i class="fas fa-redo"></i> Start Over
+            </button>
+        </div>
+
+        <div class="navigation">
+            <button class="btn-primary" id="prevBtn" disabled>
+                <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn-secondary" id="nextBtn">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const steps = document.querySelectorAll('.step');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const restartBtn = document.getElementById('restartBtn');
+            const progressBar = document.getElementById('progressBar');
+            const stepIndicator = document.getElementById('stepIndicator');
+            const completionMessage = document.getElementById('completionMessage');
+            let currentStep = 0;
+
+            // Create step indicators
+            steps.forEach((step, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'indicator-dot';
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToStep(index));
+                stepIndicator.appendChild(dot);
+            });
+
+            // Initialize progress bar
+            updateProgress();
+
+            // Next button click
+            nextBtn.addEventListener('click', () => {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    updateSteps();
+                } else {
+                    showCompletion();
+                }
+            });
+
+            // Previous button click
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateSteps();
+                }
+            });
+
+            // Restart button click
+            restartBtn.addEventListener('click', () => {
+                currentStep = 0;
+                completionMessage.style.display = 'none';
+                updateSteps();
+            });
+
+            function goToStep(stepIndex) {
+                currentStep = stepIndex;
+                updateSteps();
+            }
+
+            function updateSteps() {
+                // Hide all steps
+                steps.forEach(step => step.classList.remove('active'));
+                
+                // Show current step
+                steps[currentStep].classList.add('active');
+                
+                // Update button states
+                prevBtn.disabled = currentStep === 0;
+                
+                if (currentStep === steps.length - 1) {
+                    nextBtn.innerHTML = 'Finish <i class="fas fa-check"></i>';
+                } else {
+                    nextBtn.innerHTML = 'Next <i class="fas fa-arrow-right"></i>';
+                }
+                
+                // Update progress
+                updateProgress();
+                
+                // Update indicator dots
+                document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
+                    if (index === currentStep) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            function updateProgress() {
+                const progress = ((currentStep + 1) / steps.length) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            function showCompletion() {
+                document.querySelectorAll('.step').forEach(step => {
+                    step.style.display = 'none';
+                });
+                document.querySelector('.navigation').style.display = 'none';
+                document.querySelector('.step-indicator').style.display = 'none';
+                completionMessage.style.display = 'block';
+            }
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' && !nextBtn.disabled) {
+                    nextBtn.click();
+                } else if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
+                    prevBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
